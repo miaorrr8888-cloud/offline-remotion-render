@@ -6,6 +6,27 @@
 
 ---
 
+## 安装
+
+```sh
+# Python 3.10+，纯标准库；只需要一个可用的 ffmpeg
+python scripts/find_ffmpeg.py            # 自动探测本机 ffmpeg 并打印路径
+```
+
+ffmpeg 来源按优先级：环境变量 → PATH → WorkBuddy/CodeBuddy 自带 → imageio-ffmpeg →
+剪映/ShadowBot 安装目录。不联网、不下载任何东西。
+
+## 使用步骤
+
+1. **确认 ffmpeg**：`python scripts/find_ffmpeg.py`，拿到路径。
+2. **拿到一帧**：把 Remotion 工程的页面导出成自包含 `offline.html`，用 Chrome 一次性
+   `--screenshot` 验证样式是否正常（这一步是排错的分水岭，不要跳过）。
+3. **逐帧出图**：按帧号渲染 `frame-00001.png` 序列，注意时间轴用帧号而不是秒，避免累积误差。
+4. **编码成片**：`ffmpeg -framerate 30 -i frame-%05d.png -c:v libx264 -pix_fmt yuv420p out.mp4`。
+5. **后处理**：补音轨、烧硬字幕，命令见「七、成片后处理」。
+
+具体每一步的命令与实测耗时见下文第三节与第五节。
+
 ## 一、什么时候用
 
 - `remotion render` / `still` 报 `UnhandledPromiseRejection: reason "#<ErrorEvent>"`
@@ -117,6 +138,14 @@ python -m unittest discover -s tests -v
 9 项，全部离线：探测逻辑、能力判定、编码器受限版本识别、候选去重、CLI 退出码。
 
 ---
+
+## 适用用户
+
+**适合：** 在 Windows + 代理环境（TCP 回环被阻断）下想跑 Remotion 渲染的人；
+需要免端口、免本地服务的离线渲染路线的人。
+
+**不适合：** 期待开箱即用的 Remotion 工程模板的人（本技能给的是渲染路线与后处理命令，
+不含前端工程）；非 Windows 环境（文中路径与探测顺序按 Windows 写）。
 
 ## 九、已知边界
 
