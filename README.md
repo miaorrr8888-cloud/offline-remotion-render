@@ -139,6 +139,24 @@ python -m unittest discover -s tests -v
 
 ---
 
+## 输入与输出
+
+**输入**
+
+| 输入 | 形式 | 说明 |
+|---|---|---|
+| Remotion 工程 | 任意可打包成静态页的项目 | 导出成自包含 `offline.html`（不依赖 dev server） |
+| 环境 | 可用 ffmpeg | 先跑 `scripts/find_ffmpeg.py`，必须支持 libx264 + subtitles |
+| 音轨 / 字幕 | wav / srt（可选） | 需要配音或硬字幕时提供 |
+
+**输出**
+
+| 输出 | 形式 | 说明 |
+|---|---|---|
+| 帧序列 | `frame-00001.png` … | 按帧号命名，避免时间戳累积误差 |
+| 成片 | `out.mp4` | H.264 + yuv420p，兼容主流平台 |
+| 环境报告 | stdout | ffmpeg 路径与能力矩阵，真实样例见 [`examples/01_示例输出_环境探测.md`](examples/01_示例输出_环境探测.md) |
+
 ## 适用用户
 
 **适合：** 在 Windows + 代理环境（TCP 回环被阻断）下想跑 Remotion 渲染的人；
