@@ -1,5 +1,8 @@
 ---
 name: offline-remotion-render
+slug: zhengrong-offline-remotion-render
+displayName: "本地离线视频渲染"
+summary: "本机端口被阻断时用免端口方案逐帧渲染 Remotion 并编码成片，另附音轨合成与硬字幕烧录。"
 description: 在本机（Windows + Clash TUN，TCP 回环被阻断）用免端口方案渲染 Remotion 视频，并给出成片后处理（离线合成音轨 + ffmpeg 烧录硬字幕）。Remotion 官方 render/still 依赖 Chrome DevTools Protocol 端口，在此环境 100% 失败，本技能给出可实际出片的替代管线：自包含 offline.html + Chrome 一次性 --screenshot 逐帧 + ffmpeg 编码。触发词：Remotion 渲染失败、ErrorEvent、Bundling 24% 崩溃、#<ErrorEvent>、CDP 连不上、remotion 出不了片、逐帧渲染、免端口渲染、offline.html、视频没声音、没字幕、加音轨、加硬字幕、烧录字幕、BGM。
 display_name: "本地离线视频渲染"
 agent_created: true
